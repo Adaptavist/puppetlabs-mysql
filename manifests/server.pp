@@ -38,6 +38,12 @@ class mysql::server (
     $real_service_manage = $service_manage
   }
 
+  if ($override_options != undef and $override_options['mysqld'] and $override_options['mysqld']['innodb_log_file_size']) {
+    $clean_ib_logfile_cmd='service mysql stop && \ rm -f /var/lib/mysql/ib_logfile* && \ service mysql start'
+  } else {
+    $clean_ib_logfile_cmd=""
+  }
+
   # Create a merged together set of options.  Rightmost hashes win over left.
   $options = mysql_deepmerge($mysql::params::default_options, $override_options)
 
@@ -61,6 +67,13 @@ class mysql::server (
   Anchor['mysql::server::start'] ->
   Class['mysql::server::install'] ->
   Class['mysql::server::config'] ->
+  exec {
+      'remove_redolog':
+          command     => $clean_ib_logfile_cmd,
+          logoutput   => on_failure,
+          onlyif => 'test $(du /var/lib/mysql/ib_logfile0|cut -f1) -eq 5120'
+          path => '/usr/bin:/usr/sbin:/bin',
+  } ->
   Class['mysql::server::service'] ->
   Class['mysql::server::root_password'] ->
   Class['mysql::server::providers'] ->
