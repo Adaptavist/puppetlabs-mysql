@@ -71,7 +71,7 @@ class mysql::server (
       'remove_redolog':
           command     => $clean_ib_logfile_cmd,
           logoutput   => on_failure,
-          onlyif => 'test $(du /var/lib/mysql/ib_logfile0|cut -f1) -eq 5120'
+          onlyif => 'test $(du /var/lib/mysql/ib_logfile0|cut -f1) -eq 5120',
           path => '/usr/bin:/usr/sbin:/bin',
   } ->
   Class['mysql::server::service'] ->
