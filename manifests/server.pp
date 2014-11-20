@@ -39,7 +39,7 @@ class mysql::server (
   }
 
   if ($override_options != undef and $override_options['mysqld'] and $override_options['mysqld']['innodb_log_file_size']) {
-    $clean_ib_logfile_cmd='service mysql stop && \ rm -f /var/lib/mysql/ib_logfile* && \ service mysql start'
+    $clean_ib_logfile_cmd='rm -f /var/lib/mysql/ib_logfile*'
   } else {
     $clean_ib_logfile_cmd=""
   }
