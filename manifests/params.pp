@@ -191,6 +191,21 @@ class mysql::params {
       'log_error'        => $mysql::params::log_error,
       'socket'           => $mysql::params::socket,
     },
+    'mysqld-5.0'       => {
+      'myisam-recover' => 'BACKUP',
+    },
+    'mysqld-5.1'       => {
+      'myisam-recover' => 'BACKUP',
+    },
+    'mysqld-5.5'       => {
+      'myisam-recover' => 'BACKUP',
+    },
+    'mysqld-5.6'              => {
+      'myisam-recover-options' => 'BACKUP',
+    },
+    'mysqld-5.7'              => {
+      'myisam-recover-options' => 'BACKUP',
+    },
     'mysqld'                  => {
       'basedir'               => $mysql::params::basedir,
       'bind_address'          => '127.0.0.1',
@@ -201,7 +216,6 @@ class mysql::params {
       'max_allowed_packet'    => '16M',
       'max_binlog_size'       => '100M',
       'max_connections'       => '151',
-      'myisam_recover'        => 'BACKUP',
       'pid_file'              => $mysql::params::pidfile,
       'port'                  => '3306',
       'query_cache_limit'     => '1M',
