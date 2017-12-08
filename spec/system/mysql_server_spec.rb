@@ -52,7 +52,7 @@ describe 'mysql class' do
     end
 
     describe file(mycnf) do
-      it { should contain 'key_buffer = 16M' }
+      it { should contain 'key_buffer_size = 16M' }
       it { should contain 'max_binlog_size = 100M' }
       it { should contain 'query_cache_size = 16M' }
     end
@@ -63,7 +63,7 @@ describe 'mysql class' do
       pp = <<-EOS
         class { 'mysql::server':
           override_options => { 'mysqld' => 
-            { 'key_buffer'       => '32M',
+            { 'key_buffer_size'  => '32M',
               'max_binlog_size'  => '200M',
               'query_cache_size' => '32M',
             }
@@ -76,7 +76,7 @@ describe 'mysql class' do
     end
 
     describe file(mycnf) do
-      it { should contain 'key_buffer = 32M' }
+      it { should contain 'key_buffer_size = 32M' }
       it { should contain 'max_binlog_size = 200M' }
       it { should contain 'query_cache_size = 32M' }
     end
