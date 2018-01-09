@@ -1,7 +1,9 @@
 #
 class mysql::client (
   $bindings_enable = $mysql::params::bindings_enable,
+  $install_options = undef,
   $package_ensure  = $mysql::params::client_package_ensure,
+  $package_manage  = $mysql::params::client_package_manage,
   $package_name    = $mysql::params::client_package_name,
 ) inherits mysql::params {
 
@@ -17,11 +19,9 @@ class mysql::client (
     }
   }
 
-
   # Anchor pattern workaround to avoid resources of mysql::client::install to
   # "float off" outside mysql::client
-  anchor { 'mysql::client::start': } ->
-    Class['mysql::client::install'] ->
-  anchor { 'mysql::client::end': }
-
+  anchor { 'mysql::client::start': }
+  -> Class['mysql::client::install']
+  -> anchor { 'mysql::client::end': }
 }
