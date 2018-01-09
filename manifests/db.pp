@@ -14,6 +14,7 @@ define mysql::db (
   $import_cat_cmd                             = 'cat',
   #input validation
   $table = "${dbname}.*"
+  ) {
 
   $sql_inputs = join([$sql], ' ')
 
